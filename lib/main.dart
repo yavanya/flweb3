@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flweb3/js_screen_utils.dart';
 
-/// Entrypoint of the application.
 void main() {
   runApp(const MyApp());
 }
 
-/// Application itself.
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Flutter Demo', home: const HomePage());
+    return const MaterialApp(
+      title: 'Flutter Demo',
+      home: HomePage(),
+    );
   }
 }
 
-/// [Widget] displaying the home page consisting of an image the the buttons.
+/// The main screen of the application.
+///
+/// Displays an interface for loading and displaying images with controls for:
+/// * Image URL input and loading
+/// * Fullscreen mode toggle on double click image
+/// * Overlay menu for additional options
+///
+/// The loaded image is centered on the screen and can be viewed in fullscreen mode.
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -24,11 +32,18 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-/// State of a [HomePage].
+/// Manages the state and behavior of the [HomePage].
 class _HomePageState extends State<HomePage> {
+  /// Controller for the image URL text input field
   final urlController = TextEditingController();
+
+  /// Link for positioning the floating menu relative to its trigger button
   final buttonLayerLink = LayerLink();
+
+  /// Entry for the overlay menu when displayed
   OverlayEntry? overlayEntry;
+
+  /// Whether the overlay menu is currently displayed
   var isMenuOpen = false;
 
   @override
@@ -38,12 +53,14 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  /// The floating action button that triggers the overlay menu.
   Widget get fab => FloatingActionButton(
         onPressed: showMenu,
         elevation: isMenuOpen ? 0 : 8,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       );
 
+  /// Displays or hides the overlay menu.
   void showMenu() {
     if (isMenuOpen) {
       hideMenu();
@@ -65,7 +82,7 @@ class _HomePageState extends State<HomePage> {
           ),
           CompositedTransformFollower(
             link: buttonLayerLink,
-            followerAnchor: Alignment(0.3, 1),
+            followerAnchor: const Alignment(0.3, 1),
             child: Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Material(
@@ -108,12 +125,14 @@ class _HomePageState extends State<HomePage> {
     Overlay.of(context).insert(overlayEntry!);
   }
 
+  /// Removes the overlay menu from view and resets the menu state.
   void hideMenu() {
     overlayEntry?.remove();
     overlayEntry = null;
     setState(() => isMenuOpen = false);
   }
 
+  /// Validates and loads an image from the URL in [urlController].
   void loadImage() {
     final url = urlController.text.trim();
     if (url.isNotEmpty && Uri.tryParse(url) != null) {
@@ -147,13 +166,13 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: TextField(
                     controller: urlController,
-                    decoration: InputDecoration(hintText: 'Image URL'),
+                    decoration: const InputDecoration(hintText: 'Image URL'),
                   ),
                 ),
                 ElevatedButton(
                   onPressed: loadImage,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                  child: const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
                     child: Icon(Icons.arrow_forward),
                   ),
                 ),

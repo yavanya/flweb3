@@ -1,16 +1,32 @@
-# flweb3
+# Flutter Web App with JavaScript Interop
 
-A new Flutter project.
+A Flutter web application that demonstrates JavaScript interop capabilities by providing fullscreen control and dynamic image loading functionality.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+This application showcases:
+* JavaScript interop for browser control
+* Dynamic image loading and display
+* Fullscreen mode management
+* Overlay menu system
 
-A few resources to get you started if this is your first Flutter project:
+## Libraries
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Main Application
+The main application provides a web interface for loading and displaying images with fullscreen capabilities and an overlay menu system.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### JavaScript Interop Utilities
+Provides JavaScript interoperability utilities for browser control, specifically focused on fullscreen functionality and DOM manipulation.
+
+This library wraps browser APIs to provide type-safe access to:
+* Fullscreen mode controls
+* DOM element creation and manipulation
+* Event listener management
+
+Example usage:
+```dart
+// Toggle fullscreen mode
+toggleFullscreenJS();
+
+// Display an image centered on screen
+addCenterImageJS('https://example.com/image.jpg');
